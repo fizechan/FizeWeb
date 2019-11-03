@@ -15,20 +15,17 @@ class Request
     protected static $method;
 
     /**
-     * 当前HEADER参数
-     * @var array
+     * @var array 当前HEADER参数
      */
     protected static $header = [];
 
     /**
-     * 当前请求内容
-     * @var string
+     * @var string 当前请求内容
      */
     protected static $body;
 
     /**
-     * 资源类型定义
-     * @var array
+     * @var array 资源类型定义
      */
     protected static $mimeType = [
         'xml'   => 'application/xml,text/xml,application/x-xml',
@@ -46,8 +43,7 @@ class Request
     ];
 
     /**
-     * php://input内容
-     * @var string
+     * @var string php://input内容
      */
     protected static $input;
 

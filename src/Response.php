@@ -11,32 +11,27 @@ class Response
 {
 
     /**
-     * 当前contentType
-     * @var string
+     * @var string 当前contentType
      */
     protected $contentType = 'text/html';
 
     /**
-     * 字符集
-     * @var string
+     * @var string 字符集
      */
     protected $charset = 'utf-8';
 
     /**
-     * 状态码
-     * @var integer
+     * @var int 状态码
      */
     protected $code = 200;
 
     /**
-     * header参数
-     * @var array
+     * @var array header参数
      */
     protected $header = [];
 
     /**
-     * 响应主体内容
-     * @var string
+     * @var string 响应主体内容
      */
     protected $content = null;
 
@@ -185,7 +180,7 @@ class Response
 
     /**
      * JSON响应
-     * @param mixed $json 数组或者JSON字符串
+     * @param array|string $json 数组或者JSON字符串
      * @param string $charset 输出编码
      * @return Response
      */
@@ -237,6 +232,7 @@ class Response
     public static function redirect($url, $delay = null)
     {
         $response = new Response();
+        $response->code(302);
         if (is_null($delay)) {
             $response->header('Location', $url);
         } else {
