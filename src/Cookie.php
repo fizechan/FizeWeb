@@ -59,7 +59,7 @@ class Cookie
      */
     protected static function encode($value)
     {
-        $iv64="AAECAwQFBgcICQoLDA0ODw==";
+        $iv64="AAECAwQFBgcICQoLDA0ODw==";  //@todo 不应存在强指定项
         $iv = base64_decode($iv64, true);
         return self::$openssl->encrypt($value, 'aes-256-cbc', 0, $iv);
     }
@@ -71,7 +71,7 @@ class Cookie
      */
     protected static function decode($value)
     {
-        $iv64="AAECAwQFBgcICQoLDA0ODw==";
+        $iv64="AAECAwQFBgcICQoLDA0ODw==";  //@todo 不应存在强指定项
         $iv = base64_decode($iv64, true);
         return self::$openssl->decrypt($value, 'aes-256-cbc', 0, $iv);
     }

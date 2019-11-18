@@ -4,7 +4,7 @@
 namespace fize\web;
 
 /**
- * 请求类
+ * Request请求类
  */
 class Request
 {

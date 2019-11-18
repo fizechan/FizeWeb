@@ -5,7 +5,7 @@ namespace fize\web;
 use fize\crypt\Json;
 
 /**
- * 响应类
+ * Response响应类
  */
 class Response
 {
