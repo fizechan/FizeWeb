@@ -15,6 +15,7 @@ class Session
      * 构造
      *
      * 在构造方法中初始化 Session 底层管理
+     * 使用 Session 静态方法前请先执行初始化
      * @param array $config 配置
      */
     public function __construct(array $config = [])

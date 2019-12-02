@@ -27,8 +27,9 @@ class Cookie
     private static $onTamperEvent = [];
 
     /**
-     * 实例化
+     * 初始化
      *
+     * 使用 Cookie 静态方法前请先执行初始化
      * 注意开启 httponly 后，前端 JS 是无法获取到 cookie 的，如果需要前端 js 获取 cookie ，可在设置 cookie 时禁用 httponly
      * @param array $config 要更改的配置项
      */
