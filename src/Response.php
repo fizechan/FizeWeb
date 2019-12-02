@@ -5,13 +5,13 @@ namespace fize\web;
 use fize\crypt\Json;
 
 /**
- * Response响应类
+ * Response 响应类
  */
 class Response
 {
 
     /**
-     * @var string 当前contentType
+     * @var string 当前 contentType
      */
     protected $contentType = 'text/html';
 
@@ -26,7 +26,7 @@ class Response
     protected $code = 200;
 
     /**
-     * @var array header参数
+     * @var array header 参数
      */
     protected $header = [];
 
@@ -49,7 +49,7 @@ class Response
     }
 
     /**
-     * HTTP状态
+     * HTTP 状态
      * @param int $code 状态码
      * @return int
      */
@@ -64,7 +64,7 @@ class Response
     /**
      * 添加响应头获取返回响应头
      * @param mixed $header 要附加的响应头，数组则附加数组，字符串则附加单个，如果不指定该参数则返回当前响应头
-     * @param null $value 如果指定该值则为key的值
+     * @param null $value 如果指定该值则为 key 的值
      * @return array 返回响应头
      */
     public function header($header = null, $value = null)
@@ -179,8 +179,8 @@ class Response
     }
 
     /**
-     * JSON响应
-     * @param array|string $json 数组或者JSON字符串
+     * JSON 响应
+     * @param array|string $json 数组或者 JSON 字符串
      * @param string $charset 输出编码
      * @return Response
      */
@@ -196,8 +196,8 @@ class Response
     }
 
     /**
-     * HTML响应
-     * @param string $html HTML内容
+     * HTML 响应
+     * @param string $html HTML 内容
      * @param string $charset 输出编码
      * @return Response
      */
@@ -210,8 +210,8 @@ class Response
     }
 
     /**
-     * XML响应
-     * @param string $xml XML内容
+     * XML 响应
+     * @param string $xml XML 内容
      * @param string $charset 输出编码
      * @return Response
      */
@@ -225,7 +225,7 @@ class Response
 
     /**
      * 跳转
-     * @param string $url 跳转URL
+     * @param string $url 跳转 URL
      * @param int $delay 延迟时间，以秒为单位
      * @return Response
      */

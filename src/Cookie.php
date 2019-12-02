@@ -5,7 +5,7 @@ namespace fize\web;
 use fize\security\OpenSSL;
 
 /**
- * Cookie管理类
+ * Cookie 管理类
  */
 class Cookie
 {
@@ -16,19 +16,20 @@ class Cookie
     protected static $config;
 
     /**
-     * @var OpenSSL 开启加密时使用到的OpenSSL对象
+     * @var OpenSSL 开启加密时使用到的 OpenSSL 对象
      */
     protected static $openssl;
 
     /**
-     * cookie被篡改时的事件回调函数收集器
+     * cookie 被篡改时的事件回调函数收集器
      * @var array
      */
     private static $onTamperEvent = [];
 
     /**
      * 实例化
-     * 注意开启httponly后，前端JS是无法获取到cookie的，如果需要前端js获取cookie，可在设置cookie时禁用httponly
+     *
+     * 注意开启 httponly 后，前端 JS 是无法获取到 cookie 的，如果需要前端 js 获取 cookie ，可在设置 cookie 时禁用 httponly
      * @param array $config 要更改的配置项
      */
     public function __construct(array $config = [])
@@ -77,8 +78,11 @@ class Cookie
     }
 
     /**
-     * 绑定cookie被篡改事件
-     * @param callable $func cookie被篡改事件回调函数，支持参数$key, $value
+     * 绑定 cookie 被篡改事件
+     *
+     * 参数 `$func` :
+     *   该回调参数定义为 ($key, $value)
+     * @param callable $func cookie 被篡改事件回调函数
      */
     public static function onTamper(callable $func)
     {
@@ -86,9 +90,9 @@ class Cookie
     }
 
     /**
-     * 触发cookie被篡改事件
-     * @param string $key 获取到的cookie键名(解密后)
-     * @param string $value 获取到的cookie键值(无法解密的原加密字符串)
+     * 触发 cookie 被篡改事件
+     * @param string $key 获取到的 cookie 键名(解密后)
+     * @param string $value 获取到的 cookie 键值(无法解密的原加密字符串)
      */
     private static function fireTamperEvent($key, $value)
     {
@@ -98,7 +102,7 @@ class Cookie
     }
 
     /**
-     * 设置一个cookie
+     * 设置一个 cookie
      * @param string $key 键名
      * @param string $value 键值
      * @param array $config 本次临时指定的配置
@@ -133,9 +137,9 @@ class Cookie
     }
 
     /**
-     * 获取指定cookie值，未设置则返回false
-     * @param string $key cookie名(加密前)
-     * @param array $config 附加和设置cookie时相同的配置才能获取到
+     * 获取指定 cookie 值，未设置则返回 false
+     * @param string $key cookie 名(加密前)
+     * @param array $config 附加和设置 cookie 时相同的配置才能获取到
      * @return string
      */
     public static function get($key, array $config = [])
@@ -173,9 +177,9 @@ class Cookie
     }
 
     /**
-     * 判断Cookie是否存在
-     * @param string $key cookie名(加密前)
-     * @param array $config 附加和设置cookie时相同的配置才能获取到
+     * 判断 Cookie 是否存在
+     * @param string $key cookie 名(加密前)
+     * @param array $config 附加和设置 cookie 时相同的配置才能获取到
      * @return bool
      */
     public static function has($key, array $config = [])
@@ -184,9 +188,9 @@ class Cookie
     }
 
     /**
-     * 删除某个Cookie值
-     * @param string $key cookie键名
-     * @param array $config 附加和设置cookie时相同的配置才能正确操作
+     * 删除某个 Cookie 值
+     * @param string $key cookie 键名
+     * @param array $config 附加和设置 cookie 时相同的配置才能正确操作
      */
     public static function remove($key, array $config = [])
     {
@@ -218,7 +222,7 @@ class Cookie
     }
 
     /**
-     * 清空Cookie值
+     * 清空 Cookie 值
      */
     public static function clear()
     {

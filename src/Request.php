@@ -4,7 +4,7 @@
 namespace fize\web;
 
 /**
- * Request请求类
+ * Request 请求类
  */
 class Request
 {
@@ -15,7 +15,7 @@ class Request
     protected static $method;
 
     /**
-     * @var array 当前HEADER参数
+     * @var array 当前 HEADER 参数
      */
     protected static $header = [];
 
@@ -43,7 +43,7 @@ class Request
     ];
 
     /**
-     * @var string php://input内容
+     * @var string php://input 内容
      */
     protected static $input;
 
@@ -70,7 +70,7 @@ class Request
     }
 
     /**
-     * 获取原生SERVER
+     * 获取原生 SERVER
      * @param string $key 键名
      * @param string $default 默认值
      * @return mixed
@@ -84,7 +84,7 @@ class Request
     }
 
     /**
-     * 获取GET参数
+     * 获取 GET 参数
      * @param string $key 键名
      * @param string $default 默认值
      * @return mixed
@@ -98,7 +98,7 @@ class Request
     }
 
     /**
-     * 获取POST参数
+     * 获取 POST 参数
      * @param string $key 键名
      * @param string $default 默认值
      * @return mixed
@@ -125,7 +125,7 @@ class Request
     }
 
     /**
-     * 获取REQUEST参数
+     * 获取 REQUEST 参数
      * @param string $key 键名
      * @return mixed
      */
@@ -138,7 +138,7 @@ class Request
     }
 
     /**
-     * 获取SESSION参数
+     * 获取 SESSION 参数
      * @param string $key 键名
      * @param string $default 默认值
      * @return mixed
@@ -152,7 +152,7 @@ class Request
     }
 
     /**
-     * 获取ENV参数
+     * 获取 ENV 参数
      * @param string $key 键名
      * @param string $default 默认值
      * @return mixed
@@ -166,7 +166,7 @@ class Request
     }
 
     /**
-     * 获取COOKIE参数
+     * 获取 COOKIE 参数
      * @param string $key 键名
      * @param string $default 默认值
      * @return mixed
@@ -181,7 +181,7 @@ class Request
 
     /**
      * 返回原始输入数据
-     * @return string 失败时返回false
+     * @return string 失败时返回 false
      */
     public static function input()
     {
@@ -270,7 +270,7 @@ class Request
     }
 
     /**
-     * 是否为GET请求
+     * 是否为 GET 请求
      * @return bool
      */
     public static function isGet()
@@ -279,7 +279,7 @@ class Request
     }
 
     /**
-     * 是否为POST请求
+     * 是否为 POST 请求
      * @return bool
      */
     public static function isPost()
@@ -288,7 +288,7 @@ class Request
     }
 
     /**
-     * 是否为PUT请求
+     * 是否为 PUT 请求
      * @return bool
      */
     public static function isPut()
@@ -297,7 +297,7 @@ class Request
     }
 
     /**
-     * 是否为DELTE请求
+     * 是否为 DELTE 请求
      * @return bool
      */
     public static function isDelete()
@@ -306,7 +306,7 @@ class Request
     }
 
     /**
-     * 是否为HEAD请求
+     * 是否为 HEAD 请求
      * @return bool
      */
     public static function isHead()
@@ -315,7 +315,7 @@ class Request
     }
 
     /**
-     * 是否为PATCH请求
+     * 是否为 PATCH 请求
      * @return bool
      */
     public static function isPatch()
@@ -324,7 +324,7 @@ class Request
     }
 
     /**
-     * 是否为OPTIONS请求
+     * 是否为 OPTIONS 请求
      * @return bool
      */
     public static function isOptions()
@@ -333,7 +333,7 @@ class Request
     }
 
     /**
-     * 是否为cli
+     * 是否为 cli
      * @return bool
      */
     public static function isCli()
@@ -342,7 +342,7 @@ class Request
     }
 
     /**
-     * 是否为cgi
+     * 是否为 cgi
      * @return bool
      */
     public static function isCgi()
@@ -351,7 +351,7 @@ class Request
     }
 
     /**
-     * 当前是否ssl
+     * 当前是否 ssl
      * @return bool
      */
     public static function isSsl()
@@ -372,7 +372,7 @@ class Request
     }
 
     /**
-     * 当前是否JSON请求
+     * 当前是否 JSON 请求
      * @return bool
      */
     public static function isJson()
@@ -381,7 +381,7 @@ class Request
     }
 
     /**
-     * 当前是否Ajax请求
+     * 当前是否 Ajax 请求
      * @return bool
      */
     public static function isAjax()
@@ -392,7 +392,7 @@ class Request
     }
 
     /**
-     * 当前是否Pjax请求
+     * 当前是否 Pjax 请求
      * @return bool
      */
     public static function isPjax()

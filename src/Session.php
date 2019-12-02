@@ -6,14 +6,25 @@ namespace fize\web;
 use fize\session\Session as FizeSession;
 
 /**
- * Session管理类
+ * Session 管理类
  */
-class Session extends FizeSession
+class Session
 {
 
     /**
-     * 获取一个缓存
-     * @param string $name 缓存名
+     * 构造
+     *
+     * 在构造方法中初始化 Session 底层管理
+     * @param array $config 配置
+     */
+    public function __construct(array $config = [])
+    {
+        new FizeSession($config);
+    }
+
+    /**
+     * 获取一个 Session 值
+     * @param string $name 名称
      * @param mixed $default 默认值
      * @return mixed
      */
@@ -23,8 +34,8 @@ class Session extends FizeSession
     }
 
     /**
-     * 查看指定缓存是否存在
-     * @param string $name 缓存名
+     * 查看指定 Session 值是否存在
+     * @param string $name 名称
      * @return bool
      */
     public static function has($name)
@@ -33,9 +44,9 @@ class Session extends FizeSession
     }
 
     /**
-     * 设置一个缓存
-     * @param string $name 缓存名
-     * @param mixed $value 缓存值
+     * 设置一个 Session 值
+     * @param string $name 名称
+     * @param mixed $value 值
      */
     public static function set($name, $value)
     {
@@ -43,11 +54,19 @@ class Session extends FizeSession
     }
 
     /**
-     * 删除一个缓存
-     * @param string $name 缓存名
+     * 删除一个 Session
+     * @param string $name 名称
      */
     public static function remove($name)
     {
         unset($_SESSION[$name]);
+    }
+
+    /**
+     * 清空 SESSION
+     */
+    public static function clear()
+    {
+        FizeSession::unset();
     }
 }

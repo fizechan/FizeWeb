@@ -1,7 +1,7 @@
 {
     "name": "fize/web",
-    "description": "Web环境参数变量的获取和设置类库，如COOKIES、REQUEST、RESPONSE、SESSION等。",
-    "license": "Apache-2.0",
+    "description": "Web环境参数变量的获取和设置类库。",
+    "license": "MIT",
     "authors": [
         {
             "name": "FizeChan",
@@ -11,8 +11,8 @@
     "require": {
 		"php": ">=7.0.0",
         "fize/crypt": "~3.2",
-        "fize/security": "~1.0",
-        "fize/session": "~3.2"
+        "fize/security": "~1.1",
+        "fize/session": "~4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0.0",
