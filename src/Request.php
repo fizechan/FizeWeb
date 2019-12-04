@@ -409,14 +409,36 @@ class Request
     {
         if (self::server('HTTP_VIA') && stristr(self::server('HTTP_VIA'), "wap")) {
             return true;
-        } elseif (self::server('HTTP_ACCEPT') && strpos(strtoupper(self::server('HTTP_ACCEPT')), "VND.WAP.WML")) {
+        }
+        if (self::server('HTTP_ACCEPT') && strpos(strtoupper(self::server('HTTP_ACCEPT')), "VND.WAP.WML")) {
             return true;
-        } elseif (self::server('HTTP_X_WAP_PROFILE') || self::server('HTTP_PROFILE')) {
+        }
+        if (self::server('HTTP_X_WAP_PROFILE') || self::server('HTTP_PROFILE')) {
             return true;
-        } elseif (self::server('HTTP_USER_AGENT') && preg_match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', self::server('HTTP_USER_AGENT'))) {
+        }
+        if (self::server('HTTP_USER_AGENT') && preg_match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', self::server('HTTP_USER_AGENT'))) {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * 返回当前请求 URL
+     * @param bool $host 是否携带主机名
+     * @param bool $protocol 是否携带协议
+     * @return string
+     */
+    public static function url($host = true, $protocol = true)
+    {
+        $url = $_SERVER['REQUEST_URI'];
+        if($host) {
+            $url = $_SERVER['HTTP_HOST'] . $url;
+        }
+        if($protocol) {
+            $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $url = $protocol . $url;
+        }
+        return $url;
     }
 }

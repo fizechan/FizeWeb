@@ -18,6 +18,9 @@
         "phpunit/phpunit": "^8.0.0",
         "guzzlehttp/guzzle": "~6.3"
     },
+    "suggest": {
+        "ext-apache": "*"
+    },
 	"autoload": {
         "psr-4": {
             "fize\\web\\": "src"
