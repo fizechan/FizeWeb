@@ -30,7 +30,8 @@ class Cookie
      * 初始化
      *
      * 使用 Cookie 静态方法前请先执行初始化
-     * 注意开启 httponly 后，前端 JS 是无法获取到 cookie 的，如果需要前端 js 获取 cookie ，可在设置 cookie 时禁用 httponly
+     * 注意开启 httponly 后，前端 JS 是无法获取到 cookie 的。
+     * 如果需要前端 js 获取 cookie ，可在设置 cookie 时禁用 httponly。
      * @param array $config 要更改的配置项
      */
     public function __construct(array $config = [])
@@ -92,8 +93,13 @@ class Cookie
 
     /**
      * 触发 cookie 被篡改事件
-     * @param string $key 获取到的 cookie 键名(解密后)
-     * @param string $value 获取到的 cookie 键值(无法解密的原加密字符串)
+     *
+     * 参数 `$key` :
+     *   cookie 键名(解密后)
+     * 参数 `$value` :
+     *   键值(无法解密的原加密字符串)
+     * @param string $key 获取到的 cookie 键名
+     * @param string $value 获取到的 cookie 键值
      */
     private static function fireTamperEvent($key, $value)
     {
@@ -104,12 +110,20 @@ class Cookie
 
     /**
      * 设置一个 cookie
+     *
+     * 参数 `$config` :
+     *   类型为 int 表示有效时长，array 表示临时指定的配置
      * @param string $key 键名
      * @param string $value 键值
-     * @param array $config 本次临时指定的配置
+     * @param array|int $config 有效时长或临时指定的配置
      */
-    public static function set($key, $value, array $config = [])
+    public static function set($key, $value, $config = [])
     {
+        if (is_numeric($config)) {
+            $config = [
+                'expire' => $config
+            ];
+        }
         $config = array_merge(self::$config, $config);
         $key = $config['prefix'] . $key;
         if ($config['encode_key']) {
@@ -139,8 +153,11 @@ class Cookie
 
     /**
      * 获取指定 cookie 值，未设置则返回 false
+     *
+     * 参数 `$config` :
+     *   附加和设置 cookie 时相同的配置才能获取到
      * @param string $key cookie 名(加密前)
-     * @param array $config 附加和设置 cookie 时相同的配置才能获取到
+     * @param array $config 附加设置
      * @return string
      */
     public static function get($key, array $config = [])
@@ -179,8 +196,11 @@ class Cookie
 
     /**
      * 判断 Cookie 是否存在
+     *
+     * 参数 `$config` :
+     *   附加和设置 cookie 时相同的配置才能获取到
      * @param string $key cookie 名(加密前)
-     * @param array $config 附加和设置 cookie 时相同的配置才能获取到
+     * @param array $config 附加设置
      * @return bool
      */
     public static function has($key, array $config = [])
@@ -190,8 +210,11 @@ class Cookie
 
     /**
      * 删除某个 Cookie 值
+     *
+     * 参数 `$config` :
+     *   附加和设置 cookie 时相同的配置才能正确操作
      * @param string $key cookie 键名
-     * @param array $config 附加和设置 cookie 时相同的配置才能正确操作
+     * @param array $config 附加设置
      */
     public static function remove($key, array $config = [])
     {
