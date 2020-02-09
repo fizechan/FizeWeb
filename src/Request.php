@@ -1,7 +1,8 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\web;
+
+use fize\misc\Preg;
 
 /**
  * Request 请求类
@@ -196,6 +197,7 @@ class Request
      * @param string $key 键名，不设置则返回请求头数组
      * @param mixed $default 默认值
      * @return mixed
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public static function header($key = null, $default = null)
     {
@@ -205,10 +207,10 @@ class Request
             } else {
                 $header = [];
                 $server = $_SERVER;
-                foreach ($server as $key => $val) {
-                    if (0 === strpos($key, 'HTTP_')) {
-                        $key = str_replace('_', '-', strtolower(substr($key, 5)));
-                        $header[$key] = $val;
+                foreach ($server as $k => $val) {
+                    if (0 === strpos($k, 'HTTP_')) {
+                        $k = str_replace('_', '-', strtolower(substr($k, 5)));
+                        $header[$k] = $val;
                     }
                 }
                 if (isset($server['CONTENT_TYPE'])) {
@@ -387,7 +389,7 @@ class Request
     public static function isAjax()
     {
         $value = self::server('HTTP_X_REQUESTED_WITH');
-        $result = $value && 'xmlhttprequest' == strtolower($value) ? true : false;
+        $result = $value && 'xmlhttprequest' == strtolower($value);
         return self::request(self::$config['var_ajax']) ? true : $result;
     }
 
@@ -397,7 +399,7 @@ class Request
      */
     public static function isPjax()
     {
-        $result = !is_null(self::server('HTTP_X_PJAX')) ? true : false;
+        $result = !is_null(self::server('HTTP_X_PJAX'));
         return self::request(self::$config['var_pjax']) ? true : $result;
     }
 
@@ -416,7 +418,7 @@ class Request
         if (self::server('HTTP_X_WAP_PROFILE') || self::server('HTTP_PROFILE')) {
             return true;
         }
-        if (self::server('HTTP_USER_AGENT') && preg_match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', self::server('HTTP_USER_AGENT'))) {
+        if (self::server('HTTP_USER_AGENT') && Preg::match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', self::server('HTTP_USER_AGENT'))) {
             return true;
         }
 

@@ -58,7 +58,7 @@ class Session
      * 删除一个 Session
      * @param string $name 名称
      */
-    public static function remove($name)
+    public static function delete($name)
     {
         unset($_SESSION[$name]);
     }

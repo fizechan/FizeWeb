@@ -21,6 +21,11 @@ class Cookie
     protected static $openssl;
 
     /**
+     * @var string 开启加密时使用的初始化向量
+     */
+    protected static $iv;
+
+    /**
      * cookie 被篡改时的事件回调函数收集器
      * @var array
      */
@@ -37,21 +42,24 @@ class Cookie
     public function __construct(array $config = [])
     {
         $default_config = [
-            'expire'        => 3600, //cookie有效时间，以秒为单位
-            'path'          => "/", //Cookie路径
-            'domain'        => "", //Cookie有效域名
-            'secure'        => false, //是否只允许在HTTPS安全链接下生效
-            'httponly'      => true, //是否使用httponly，为安全性，全局默认开启
-            'prefix'        => "", //Cookie键名前缀,如果发生冲突可以修改该值
-            'encode_key'    => false, //是否加密cookie键名，加密键名则需要对所有cookie进行遍历获取，不合适cookie过多的情况
-            'encode_value'  => false, //是否加密cookie键值
-            'secret_key'    => "", //加密密钥
+            'expire'         => 3600, //cookie有效时间，以秒为单位
+            'path'           => "/", //Cookie路径
+            'domain'         => "", //Cookie有效域名
+            'secure'         => false, //是否只允许在HTTPS安全链接下生效
+            'httponly'       => true, //是否使用httponly，为安全性，全局默认开启
+            'prefix'         => "", //Cookie键名前缀,如果发生冲突可以修改该值
+            'encrypt_key'    => false, //是否加密cookie键名，加密键名则需要对所有cookie进行遍历获取，不合适cookie过多的情况
+            'encrypt_value'  => false, //是否加密cookie键值
+            'encrypt_method' => 'aes-256-cbc',  //加密算法
+            'secret_key'     => "", //加密密钥
         ];
         self::$config = array_merge($default_config, $config);
-        
-        if(self::$config['encode_key'] || self::$config['encode_value']) {
+
+        if (self::$config['encrypt_key'] || self::$config['encrypt_value']) {
             self::$openssl = new OpenSSL();
             self::$openssl->setKey(self::$config['secret_key']);
+            $ivlen = OpenSSL::cipherIvLength(self::$config['encrypt_method']);
+            self::$iv = OpenSSL::randomPseudoBytes($ivlen);
         }
     }
 
@@ -60,11 +68,9 @@ class Cookie
      * @param string $value 待加密字符串
      * @return string
      */
-    protected static function encode($value)
+    protected static function encrypt($value)
     {
-        $iv64="AAECAwQFBgcICQoLDA0ODw==";  //@todo 不应存在强指定项
-        $iv = base64_decode($iv64, true);
-        return self::$openssl->encrypt($value, 'aes-256-cbc', 0, $iv);
+        return self::$openssl->encrypt($value, self::$config['encrypt_method'], 0, self::$iv);
     }
 
     /**
@@ -72,11 +78,9 @@ class Cookie
      * @param string $value 待解密字符串
      * @return string
      */
-    protected static function decode($value)
+    protected static function decrypt($value)
     {
-        $iv64="AAECAwQFBgcICQoLDA0ODw==";  //@todo 不应存在强指定项
-        $iv = base64_decode($iv64, true);
-        return self::$openssl->decrypt($value, 'aes-256-cbc', 0, $iv);
+        return self::$openssl->decrypt($value, self::$config['encrypt_method'], 0, self::$iv);
     }
 
     /**
@@ -119,32 +123,37 @@ class Cookie
      */
     public static function set($key, $value, $config = [])
     {
-        if (is_numeric($config)) {
+        if (is_numeric($config)) {  // $config为数字时表示有效时长
             $config = [
                 'expire' => $config
             ];
         }
+        if (is_bool($config)) {  // $config为布尔类型时表示是否加密cookie键值
+            $config = [
+                'encrypt_value' => $config
+            ];
+        }
         $config = array_merge(self::$config, $config);
         $key = $config['prefix'] . $key;
-        if ($config['encode_key']) {
+        if ($config['encrypt_key']) {
             $no_find = true;
             foreach ($_COOKIE as $k => $v) {
-                if (self::decode($k) == $key) {  //cookie会自动进行urldecode
+                if (self::decrypt($k) == $key) {  //cookie会自动进行urldecode
                     $key = urlencode($k);  //手动urlencode防止传入非法字符
                     $no_find = false;
                     break;
                 }
             }
             if ($no_find) {
-                $key = urlencode(self::encode($key));  //手动urlencode防止传入非法字符
+                $key = urlencode(self::encrypt($key));  //手动urlencode防止传入非法字符
             }
         }
-        if ($config['encode_value']) {
-            $value = self::encode($value);
+        if ($config['encrypt_value']) {
+            $value = self::encrypt($value);
         }
         setcookie($key, $value, time() + $config['expire'], $config['path'], $config['domain'], $config['secure'], $config['httponly']);
         //使当前生效
-        if($config['encode_key']) {
+        if ($config['encrypt_key']) {
             $_COOKIE[urldecode($key)] = $value;
         } else {
             $_COOKIE[$key] = $value;
@@ -160,15 +169,20 @@ class Cookie
      * @param array $config 附加设置
      * @return string
      */
-    public static function get($key, array $config = [])
+    public static function get($key, $config = [])
     {
         $value = '';
+        if (is_bool($config)) {  // $config为布尔类型时表示是否加密cookie键值
+            $config = [
+                'encrypt_value' => $config
+            ];
+        }
         $config = array_merge(self::$config, $config);
         $key = $config['prefix'] . $key;
-        if ($config['encode_key']) {
+        if ($config['encrypt_key']) {
             $no_find = true;
             foreach ($_COOKIE as $k => $v) {
-                if (self::decode($k) == $key) {  //cookie会自动进行urldecode
+                if (self::decrypt($k) == $key) {  //cookie会自动进行urldecode
                     $value = $v;
                     $no_find = false;
                     break;
@@ -183,8 +197,8 @@ class Cookie
             }
             $value = $_COOKIE[$key];
         }
-        if ($config['encode_value']) {
-            $decode_str = self::decode($value);
+        if ($config['encrypt_value']) {
+            $decode_str = self::decrypt($value);
             if ($decode_str === false) {
                 self::fireTamperEvent($key, $value);
                 return false;
@@ -216,29 +230,29 @@ class Cookie
      * @param string $key cookie 键名
      * @param array $config 附加设置
      */
-    public static function remove($key, array $config = [])
+    public static function delete($key, array $config = [])
     {
         $config = array_merge(self::$config, $config);
         $key = $config['prefix'] . $key;
 
-        if ($config['encode_key']) {
+        if ($config['encrypt_key']) {
             $no_find = true;
             foreach ($_COOKIE as $k => $v) {
-                if (self::decode($k) == $key) {  //cookie会自动进行urldecode
+                if (self::decrypt($k) == $key) {  //cookie会自动进行urldecode
                     $key = urlencode($k);  //手动urlencode防止传入非法字符
                     $no_find = false;
                     break;
                 }
             }
             if ($no_find) {
-                $key = urlencode(self::encode($key));  //手动urlencode防止传入非法字符
+                $key = urlencode(self::encrypt($key));  //手动urlencode防止传入非法字符
             }
         }
 
         setcookie($key, '', -3600);
 
         //下文马上失效
-        if(self::$config['encode_key']) {
+        if (self::$config['encrypt_key']) {
             unset($_COOKIE[urldecode($key)]);
         } else {
             unset($_COOKIE[$key]);
@@ -252,7 +266,7 @@ class Cookie
     {
         foreach ($_COOKIE as $key => $value) {
             setcookie($key, '', -3600);
-            unset($_COOKIE[$key]);  //下文马上失效
+            unset($_COOKIE[$key]);  // 下文马上失效
         }
     }
 }

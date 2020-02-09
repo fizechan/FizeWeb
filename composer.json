@@ -10,9 +10,11 @@
     ],
     "require": {
 		"php": ">=7.0.0",
+        "fize/misc": "~0.1",
         "fize/crypt": "~3.2",
-        "fize/security": "~1.3",
-        "fize/session": "~4.0"
+        "fize/security": "~1.4",
+        "fize/session": "~4.0",
+        "fize/http": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0.0",
