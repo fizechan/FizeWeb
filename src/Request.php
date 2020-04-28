@@ -5,7 +5,7 @@ namespace fize\web;
 use fize\misc\Preg;
 
 /**
- * Request 请求类
+ * Request 请求
  */
 class Request
 {
@@ -57,14 +57,14 @@ class Request
      * 初始化静态属性
      * @param array $config 配置
      */
-    public function __construct(array $config =[])
+    public function __construct(array $config = [])
     {
         $default_config = [
-            'var_method'       => '_method',  //请求方式伪装字段
-            'var_ajax'         => '_ajax',  //AJAX伪装字段
-            'var_pjax'         => '_pjax',  //PJAX伪装字段
-            'https_agent_name' => '',  //HTTPS代理标识
-            'accept_type'      => '',  //指定接受类型
+            'var_method'       => '_method',  // 请求方式伪装字段
+            'var_ajax'         => '_ajax',  // AJAX伪装字段
+            'var_pjax'         => '_pjax',  // PJAX伪装字段
+            'https_agent_name' => '',  // HTTPS代理标识
+            'accept_type'      => '',  // 指定接受类型
         ];
         $config = array_merge($default_config, $config);
         self::$config = $config;
@@ -72,7 +72,7 @@ class Request
 
     /**
      * 获取原生 SERVER
-     * @param string $key 键名
+     * @param string $key     键名
      * @param string $default 默认值
      * @return mixed
      */
@@ -86,7 +86,7 @@ class Request
 
     /**
      * 获取 GET 参数
-     * @param string $key 键名
+     * @param string $key     键名
      * @param string $default 默认值
      * @return mixed
      */
@@ -100,7 +100,7 @@ class Request
 
     /**
      * 获取 POST 参数
-     * @param string $key 键名
+     * @param string $key     键名
      * @param string $default 默认值
      * @return mixed
      */
@@ -140,7 +140,7 @@ class Request
 
     /**
      * 获取 SESSION 参数
-     * @param string $key 键名
+     * @param string $key     键名
      * @param string $default 默认值
      * @return mixed
      */
@@ -154,7 +154,7 @@ class Request
 
     /**
      * 获取 ENV 参数
-     * @param string $key 键名
+     * @param string $key     键名
      * @param string $default 默认值
      * @return mixed
      */
@@ -168,7 +168,7 @@ class Request
 
     /**
      * 获取 COOKIE 参数
-     * @param string $key 键名
+     * @param string $key     键名
      * @param string $default 默认值
      * @return mixed
      */
@@ -194,8 +194,8 @@ class Request
 
     /**
      * 获取请求头
-     * @param string $key 键名，不设置则返回请求头数组
-     * @param mixed $default 默认值
+     * @param string $key     键名，不设置则返回请求头数组
+     * @param mixed  $default 默认值
      * @return mixed
      * @noinspection PhpComposerExtensionStubsInspection
      */
@@ -427,17 +427,17 @@ class Request
 
     /**
      * 返回当前请求 URL
-     * @param bool $host 是否携带主机名
+     * @param bool $host     是否携带主机名
      * @param bool $protocol 是否携带协议
      * @return string
      */
     public static function url($host = true, $protocol = true)
     {
         $url = $_SERVER['REQUEST_URI'];
-        if($host) {
+        if ($host) {
             $url = $_SERVER['HTTP_HOST'] . $url;
         }
-        if($protocol) {
+        if ($protocol) {
             $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
             $url = $protocol . $url;
         }

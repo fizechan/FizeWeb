@@ -7,7 +7,7 @@ use fize\http\Stream;
 use fize\crypt\Json;
 
 /**
- * Response 响应类
+ * Response 响应
  */
 class Response extends HttpResponse
 {
@@ -35,8 +35,8 @@ class Response extends HttpResponse
 
     /**
      * JSON 响应
-     * @param array|string $json 数组或者 JSON 字符串
-     * @param string $charset 输出编码
+     * @param array|string $json    数组或者 JSON 字符串
+     * @param string       $charset 输出编码
      * @return Response
      */
     public static function json($json, $charset = 'utf-8')
@@ -53,7 +53,7 @@ class Response extends HttpResponse
 
     /**
      * HTML 响应
-     * @param string $html HTML 内容
+     * @param string $html    HTML 内容
      * @param string $charset 输出编码
      * @return Response
      */
@@ -68,7 +68,7 @@ class Response extends HttpResponse
 
     /**
      * XML 响应
-     * @param string $xml XML 内容
+     * @param string $xml     XML 内容
      * @param string $charset 输出编码
      * @return Response
      */
@@ -83,8 +83,8 @@ class Response extends HttpResponse
 
     /**
      * 跳转
-     * @param string $url 跳转 URL
-     * @param int $delay 延迟时间，以秒为单位
+     * @param string $url   跳转 URL
+     * @param int    $delay 延迟时间，以秒为单位
      * @return Response
      */
     public static function redirect($url, $delay = null)
@@ -102,7 +102,7 @@ class Response extends HttpResponse
 
     /**
      * 下载
-     * @param string $file 要下载的文件路径
+     * @param string $file     要下载的文件路径
      * @param string $filename 下载文件名
      * @return Response
      */
@@ -124,7 +124,7 @@ class Response extends HttpResponse
     /**
      * 页面输出类型
      * @param string $content_type 输出类型
-     * @param string $charset 输出编码
+     * @param string $charset      输出编码
      * @return Response
      */
     protected function contentType($content_type, $charset = 'utf-8')

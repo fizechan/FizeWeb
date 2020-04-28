@@ -1,12 +1,11 @@
 <?php
 
-
 namespace fize\web;
 
 use fize\session\Session as FizeSession;
 
 /**
- * Session 管理类
+ * Session 管理
  */
 class Session
 {
@@ -25,8 +24,8 @@ class Session
 
     /**
      * 获取一个 Session 值
-     * @param string $name 名称
-     * @param mixed $default 默认值
+     * @param string $name    名称
+     * @param mixed  $default 默认值
      * @return mixed
      */
     public static function get($name, $default = null)
@@ -46,8 +45,8 @@ class Session
 
     /**
      * 设置一个 Session 值
-     * @param string $name 名称
-     * @param mixed $value 值
+     * @param string $name  名称
+     * @param mixed  $value 值
      */
     public static function set($name, $value)
     {

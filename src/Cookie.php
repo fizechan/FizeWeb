@@ -5,7 +5,7 @@ namespace fize\web;
 use fize\security\OpenSSL;
 
 /**
- * Cookie 管理类
+ * Cookie 管理
  */
 class Cookie
 {
@@ -102,7 +102,7 @@ class Cookie
      *   cookie 键名(解密后)
      * 参数 `$value` :
      *   键值(无法解密的原加密字符串)
-     * @param string $key 获取到的 cookie 键名
+     * @param string $key   获取到的 cookie 键名
      * @param string $value 获取到的 cookie 键值
      */
     private static function fireTamperEvent($key, $value)
@@ -117,8 +117,8 @@ class Cookie
      *
      * 参数 `$config` :
      *   类型为 int 表示有效时长，array 表示临时指定的配置
-     * @param string $key 键名
-     * @param string $value 键值
+     * @param string    $key    键名
+     * @param string    $value  键值
      * @param array|int $config 有效时长或临时指定的配置
      */
     public static function set($key, $value, $config = [])
@@ -165,8 +165,8 @@ class Cookie
      *
      * 参数 `$config` :
      *   附加和设置 cookie 时相同的配置才能获取到
-     * @param string $key cookie 名(加密前)
-     * @param array $config 附加设置
+     * @param string $key    cookie 名(加密前)
+     * @param array  $config 附加设置
      * @return string
      */
     public static function get($key, $config = [])
@@ -213,8 +213,8 @@ class Cookie
      *
      * 参数 `$config` :
      *   附加和设置 cookie 时相同的配置才能获取到
-     * @param string $key cookie 名(加密前)
-     * @param array $config 附加设置
+     * @param string $key    cookie 名(加密前)
+     * @param array  $config 附加设置
      * @return bool
      */
     public static function has($key, array $config = [])
@@ -227,8 +227,8 @@ class Cookie
      *
      * 参数 `$config` :
      *   附加和设置 cookie 时相同的配置才能正确操作
-     * @param string $key cookie 键名
-     * @param array $config 附加设置
+     * @param string $key    cookie 键名
+     * @param array  $config 附加设置
      */
     public static function delete($key, array $config = [])
     {
