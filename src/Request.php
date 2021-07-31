@@ -2,8 +2,6 @@
 
 namespace fize\web;
 
-use fize\misc\Preg;
-
 /**
  * Request 请求
  */
@@ -72,119 +70,119 @@ class Request
 
     /**
      * 获取原生 SERVER
-     * @param string $key     键名
-     * @param string $default 默认值
+     * @param string|null $key     键名
+     * @param string|null $default 默认值
      * @return mixed
      */
-    public static function server($key = null, $default = null)
+    public static function server(string $key = null, string $default = null)
     {
         if (is_null($key)) {
             return $_SERVER;
         }
-        return isset($_SERVER[$key]) ? $_SERVER[$key] : $default;
+        return $_SERVER[$key] ?? $default;
     }
 
     /**
      * 获取 GET 参数
-     * @param string $key     键名
-     * @param string $default 默认值
+     * @param string|null $key     键名
+     * @param string|null $default 默认值
      * @return mixed
      */
-    public static function get($key = null, $default = null)
+    public static function get(string $key = null, string $default = null)
     {
         if (is_null($key)) {
             return $_GET;
         }
-        return isset($_GET[$key]) ? $_GET[$key] : $default;
+        return $_GET[$key] ?? $default;
     }
 
     /**
      * 获取 POST 参数
-     * @param string $key     键名
-     * @param string $default 默认值
+     * @param string|null $key     键名
+     * @param string|null $default 默认值
      * @return mixed
      */
-    public static function post($key = null, $default = null)
+    public static function post(string $key = null, string $default = null)
     {
         if (is_null($key)) {
             return $_POST;
         }
-        return isset($_POST[$key]) ? $_POST[$key] : $default;
+        return $_POST[$key] ?? $default;
     }
 
     /**
      * 获取上传文件
-     * @param string $key 键名
+     * @param string|null $key 键名
      * @return mixed
      */
-    public static function files($key = null)
+    public static function files(string $key = null)
     {
         if (is_null($key)) {
             return $_FILES;
         }
-        return isset($_FILES[$key]) ? $_FILES[$key] : null;
+        return $_FILES[$key] ?? null;
     }
 
     /**
      * 获取 REQUEST 参数
-     * @param string $key 键名
+     * @param string|null $key 键名
      * @return mixed
      */
-    public static function request($key = null)
+    public static function request(string $key = null)
     {
         if (is_null($key)) {
             return $_REQUEST;
         }
-        return isset($_REQUEST[$key]) ? $_REQUEST[$key] : null;
+        return $_REQUEST[$key] ?? null;
     }
 
     /**
      * 获取 SESSION 参数
-     * @param string $key     键名
-     * @param string $default 默认值
+     * @param string|null $key     键名
+     * @param string|null $default 默认值
      * @return mixed
      */
-    public static function session($key = null, $default = null)
+    public static function session(string $key = null, string $default = null)
     {
         if (is_null($key)) {
             return $_SESSION;
         }
-        return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
+        return $_SESSION[$key] ?? $default;
     }
 
     /**
      * 获取 ENV 参数
-     * @param string $key     键名
-     * @param string $default 默认值
+     * @param string|null $key     键名
+     * @param string|null $default 默认值
      * @return mixed
      */
-    public static function env($key = null, $default = null)
+    public static function env(string $key = null, string $default = null)
     {
         if (is_null($key)) {
             return $_ENV;
         }
-        return isset($_ENV[$key]) ? $_ENV[$key] : $default;
+        return $_ENV[$key] ?? $default;
     }
 
     /**
      * 获取 COOKIE 参数
-     * @param string $key     键名
-     * @param string $default 默认值
+     * @param string|null $key     键名
+     * @param string|null $default 默认值
      * @return mixed
      */
-    public static function cookie($key = null, $default = null)
+    public static function cookie(string $key = null, string $default = null)
     {
         if (is_null($key)) {
             return $_COOKIE;
         }
-        return isset($_COOKIE[$key]) ? $_COOKIE[$key] : $default;
+        return $_COOKIE[$key] ?? $default;
     }
 
     /**
      * 返回原始输入数据
      * @return string 失败时返回 false
      */
-    public static function input()
+    public static function input(): string
     {
         if (!self::$input) {
             self::$input = file_get_contents('php://input');
@@ -194,12 +192,11 @@ class Request
 
     /**
      * 获取请求头
-     * @param string $key     键名，不设置则返回请求头数组
-     * @param mixed  $default 默认值
+     * @param string|null $key     键名，不设置则返回请求头数组
+     * @param mixed       $default 默认值
      * @return mixed
-     * @noinspection PhpComposerExtensionStubsInspection
      */
-    public static function header($key = null, $default = null)
+    public static function header(string $key = null, $default = null)
     {
         if (!self::$header) {
             if (function_exists('apache_request_headers') && $result = apache_request_headers()) {
@@ -226,14 +223,14 @@ class Request
             return self::$header;
         }
         $key = strtoupper($key);
-        return isset(self::$header[$key]) ? self::$header[$key] : $default;
+        return self::$header[$key] ?? $default;
     }
 
     /**
      * 当前请求 HTTP_CONTENT_TYPE
      * @return string
      */
-    public static function contentType()
+    public static function contentType(): string
     {
         $content_type = self::server('CONTENT_TYPE');
         if ($content_type) {
@@ -251,7 +248,7 @@ class Request
      * 当前的请求类型
      * @return string
      */
-    public static function method()
+    public static function method(): string
     {
         if (!self::$method) {
             if (isset($_POST[self::$config['var_method']])) {
@@ -275,7 +272,7 @@ class Request
      * 是否为 GET 请求
      * @return bool
      */
-    public static function isGet()
+    public static function isGet(): bool
     {
         return self::method() == 'GET';
     }
@@ -284,7 +281,7 @@ class Request
      * 是否为 POST 请求
      * @return bool
      */
-    public static function isPost()
+    public static function isPost(): bool
     {
         return self::method() == 'POST';
     }
@@ -293,7 +290,7 @@ class Request
      * 是否为 PUT 请求
      * @return bool
      */
-    public static function isPut()
+    public static function isPut(): bool
     {
         return self::method() == 'PUT';
     }
@@ -302,7 +299,7 @@ class Request
      * 是否为 DELTE 请求
      * @return bool
      */
-    public static function isDelete()
+    public static function isDelete(): bool
     {
         return self::method() == 'DELETE';
     }
@@ -311,7 +308,7 @@ class Request
      * 是否为 HEAD 请求
      * @return bool
      */
-    public static function isHead()
+    public static function isHead(): bool
     {
         return self::method() == 'HEAD';
     }
@@ -320,7 +317,7 @@ class Request
      * 是否为 PATCH 请求
      * @return bool
      */
-    public static function isPatch()
+    public static function isPatch(): bool
     {
         return self::method() == 'PATCH';
     }
@@ -329,7 +326,7 @@ class Request
      * 是否为 OPTIONS 请求
      * @return bool
      */
-    public static function isOptions()
+    public static function isOptions(): bool
     {
         return self::method() == 'OPTIONS';
     }
@@ -338,7 +335,7 @@ class Request
      * 是否为 cli
      * @return bool
      */
-    public static function isCli()
+    public static function isCli(): bool
     {
         return PHP_SAPI == 'cli';
     }
@@ -347,7 +344,7 @@ class Request
      * 是否为 cgi
      * @return bool
      */
-    public static function isCgi()
+    public static function isCgi(): bool
     {
         return strpos(PHP_SAPI, 'cgi') === 0;
     }
@@ -356,7 +353,7 @@ class Request
      * 当前是否 ssl
      * @return bool
      */
-    public static function isSsl()
+    public static function isSsl(): bool
     {
         if (self::server('HTTPS') && ('1' == self::server('HTTPS') || 'on' == strtolower(self::server('HTTPS')))) {
             return true;
@@ -377,7 +374,7 @@ class Request
      * 当前是否 JSON 请求
      * @return bool
      */
-    public static function isJson()
+    public static function isJson(): bool
     {
         return false !== strpos(self::contentType(), 'json') || false !== strpos(self::$config['accept_type'], 'json');
     }
@@ -386,7 +383,7 @@ class Request
      * 当前是否 Ajax 请求
      * @return bool
      */
-    public static function isAjax()
+    public static function isAjax(): bool
     {
         $value = self::server('HTTP_X_REQUESTED_WITH');
         $result = $value && 'xmlhttprequest' == strtolower($value);
@@ -397,7 +394,7 @@ class Request
      * 当前是否 Pjax 请求
      * @return bool
      */
-    public static function isPjax()
+    public static function isPjax(): bool
     {
         $result = !is_null(self::server('HTTP_X_PJAX'));
         return self::request(self::$config['var_pjax']) ? true : $result;
@@ -407,7 +404,7 @@ class Request
      * 检测是否使用手机访问
      * @return bool
      */
-    public static function isMobile()
+    public static function isMobile(): bool
     {
         if (self::server('HTTP_VIA') && stristr(self::server('HTTP_VIA'), "wap")) {
             return true;
@@ -418,7 +415,7 @@ class Request
         if (self::server('HTTP_X_WAP_PROFILE') || self::server('HTTP_PROFILE')) {
             return true;
         }
-        if (self::server('HTTP_USER_AGENT') && Preg::match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', self::server('HTTP_USER_AGENT'))) {
+        if (self::server('HTTP_USER_AGENT') && preg_match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', self::server('HTTP_USER_AGENT'))) {
             return true;
         }
 
@@ -431,7 +428,7 @@ class Request
      * @param bool $protocol 是否携带协议
      * @return string
      */
-    public static function url($host = true, $protocol = true)
+    public static function url(bool $host = true, bool $protocol = true): string
     {
         $url = $_SERVER['REQUEST_URI'];
         if ($host) {

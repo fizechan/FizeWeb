@@ -28,9 +28,9 @@ class Session
      * @param mixed  $default 默认值
      * @return mixed
      */
-    public static function get($name, $default = null)
+    public static function get(string $name, $default = null)
     {
-        return isset($_SESSION[$name]) ? $_SESSION[$name] : $default;
+        return $_SESSION[$name] ?? $default;
     }
 
     /**
@@ -38,7 +38,7 @@ class Session
      * @param string $name 名称
      * @return bool
      */
-    public static function has($name)
+    public static function has(string $name): bool
     {
         return isset($_SESSION[$name]);
     }
@@ -48,7 +48,7 @@ class Session
      * @param string $name  名称
      * @param mixed  $value 值
      */
-    public static function set($name, $value)
+    public static function set(string $name, $value)
     {
         $_SESSION[$name] = $value;
     }
@@ -57,7 +57,7 @@ class Session
      * 删除一个 Session
      * @param string $name 名称
      */
-    public static function delete($name)
+    public static function delete(string $name)
     {
         unset($_SESSION[$name]);
     }
