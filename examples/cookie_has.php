@@ -2,8 +2,8 @@
 
 require_once "../vendor/autoload.php";
 
-use fize\web\Cookie;
-use fize\crypt\Json;
+use Fize\Crypt\Json;
+use Fize\Web\Cookie;
 
 $config = [
     'prefix'        => "fz_", //Cookie键名前缀,如果发生冲突可以修改该值

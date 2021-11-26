@@ -1,7 +1,8 @@
 <?php
 
+namespace Tests;
 
-use fize\web\Request;
+use Fize\Web\Request;
 use PHPUnit\Framework\TestCase;
 
 class TestRequest extends TestCase

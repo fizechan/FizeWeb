@@ -1,8 +1,8 @@
 <?php
 
-namespace fize\web;
+namespace Fize\Web;
 
-use fize\session\Session as FizeSession;
+use Fize\Session\Session as FizeSession;
 
 /**
  * Session 管理

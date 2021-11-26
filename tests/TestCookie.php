@@ -1,8 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace Tests;
+
+use Fize\Crypt\Json;
 use GuzzleHttp\Client;
-use fize\crypt\Json;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @notice 该测试仅支持windows环境

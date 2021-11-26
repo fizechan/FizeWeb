@@ -1,7 +1,8 @@
 <?php
 
+namespace Tests;
 
-use fize\web\Response;
+use Fize\Web\Response;
 use PHPUnit\Framework\TestCase;
 
 class TestResponse extends TestCase

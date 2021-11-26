@@ -10,20 +10,25 @@
   ],
   "autoload": {
     "psr-4": {
-      "fize\\web\\": "src"
+      "Fize\\Web\\": "src"
     }
   },
   "require": {
     "php": ">=7.0.0",
-    "fize/crypt": "^3.2.0",
-    "fize/http": "^2.0.0",
-    "fize/session": "^4.0.0"
+    "fize/crypt": "^4.0.0",
+    "fize/http": "^3.0.0",
+    "fize/session": "^5.0.0"
+  },
+  "suggest": {
+    "ext-apache": "*"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
   },
   "require-dev": {
     "guzzlehttp/guzzle": "^6.5.0",
     "phpunit/phpunit": "^9.5.0"
-  },
-  "suggest": {
-    "ext-apache": "*"
   }
 }

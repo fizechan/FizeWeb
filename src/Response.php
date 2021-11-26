@@ -1,10 +1,10 @@
 <?php
 
-namespace fize\web;
+namespace Fize\Web;
 
-use fize\crypt\Json;
-use fize\http\Response as HttpResponse;
-use fize\http\StreamFactory;
+use Fize\Crypt\Json;
+use Fize\Http\Response as HttpResponse;
+use Fize\Http\StreamFactory;
 
 /**
  * Response 响应

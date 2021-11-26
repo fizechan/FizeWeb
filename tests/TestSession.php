@@ -1,7 +1,8 @@
 <?php
 
+namespace Tests;
 
-use fize\web\Session;
+use Fize\Web\Session;
 use PHPUnit\Framework\TestCase;
 
 class TestSession extends TestCase

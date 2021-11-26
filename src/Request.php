@@ -1,6 +1,6 @@
 <?php
 
-namespace fize\web;
+namespace Fize\Web;
 
 /**
  * Request 请求
