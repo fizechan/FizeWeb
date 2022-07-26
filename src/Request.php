@@ -423,6 +423,21 @@ class Request
     }
 
     /**
+     * 返回当前请求域名
+     * @param bool $protocol 是否携带协议
+     * @return string
+     */
+    public static function domain(bool $protocol = true): string
+    {
+        $domain = $_SERVER['HTTP_HOST'];
+        if ($protocol) {
+            $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $domain = $protocol . $domain;
+        }
+        return $domain;
+    }
+
+    /**
      * 返回当前请求 URL
      * @param bool $host     是否携带主机名
      * @param bool $protocol 是否携带协议
@@ -432,11 +447,7 @@ class Request
     {
         $url = $_SERVER['REQUEST_URI'];
         if ($host) {
-            $url = $_SERVER['HTTP_HOST'] . $url;
-        }
-        if ($protocol) {
-            $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-            $url = $protocol . $url;
+            $url = self::domain($protocol) . $url;
         }
         return $url;
     }
