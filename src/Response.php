@@ -2,7 +2,7 @@
 
 namespace Fize\Web;
 
-use Fize\Crypt\Json;
+use Fize\Codec\Json;
 use Fize\Http\Response as HttpResponse;
 use Fize\Http\StreamFactory;
 

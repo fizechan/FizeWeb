@@ -15,7 +15,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "fize/crypt": "^4.0.0",
+    "fize/codec": "^5.0.0",
     "fize/http": "^3.0.0",
     "fize/session": "^5.0.0"
   },

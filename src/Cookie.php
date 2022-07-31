@@ -25,11 +25,11 @@ class Cookie
     {
         $default_config = [
             'expire'   => 3600, //cookie有效时间，以秒为单位
-            'path'     => "/", //Cookie路径
-            'domain'   => "", //Cookie有效域名
+            'path'     => '/', //Cookie路径
+            'domain'   => '', //Cookie有效域名
             'secure'   => false, //是否只允许在HTTPS安全链接下生效
             'httponly' => true, //是否使用httponly，为安全性，全局默认开启
-            'prefix'   => "", //Cookie键名前缀,如果发生冲突可以修改该值
+            'prefix'   => '', //Cookie键名前缀,如果发生冲突可以修改该值
         ];
         self::$config = array_merge($default_config, $config);
     }
