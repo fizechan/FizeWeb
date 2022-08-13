@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Fize\Crypt\Json;
+use Fize\Codec\Json;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -24,15 +24,15 @@ class TestCookie extends TestCase
 
     /**
      * 构造时启动内置服务器用于测试
-     * @param null $name
-     * @param array $data
+     * @param null   $name
+     * @param array  $data
      * @param string $dataName
      */
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
-        if(!self::$seriver) {
+        if (!self::$seriver) {
             self::$seriver = true;
             $cmd = 'start cmd /k "cd /d %cd%/../examples &&php -S localhost:8123"';
             $pid = popen($cmd, 'r');
@@ -40,7 +40,7 @@ class TestCookie extends TestCase
             sleep(3);  //待服务器启动
         }
 
-        if(!$this->client) {
+        if (!$this->client) {
             $this->client = new Client([
                 'base_uri' => 'http://localhost:8123'
             ]);
