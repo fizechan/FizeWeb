@@ -16,7 +16,7 @@
   "require": {
     "php": ">=7.0.0",
     "fize/codec": "^5.0.0",
-    "fize/http": "^3.0.0",
+    "fize/http": "^4.0.1",
     "fize/session": "^5.0.0"
   },
   "suggest": {
