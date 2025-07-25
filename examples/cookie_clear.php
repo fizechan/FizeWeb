@@ -1,7 +1,6 @@
 <?php
 require_once "../vendor/autoload.php";
 
-use Fize\Crypt\Json;
 use Fize\Web\Cookie;
 
 $config = [
@@ -49,4 +48,4 @@ $result = [
     ]
 ];
 
-echo Json::encode($result);
+print_r($result);

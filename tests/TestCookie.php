@@ -137,7 +137,7 @@ class TestCookie extends TestCase
         self::assertEquals(0, $json['errcode']);
         self::assertEquals('value1', $json['data']['value1']);
         self::assertEquals('value2', $json['data']['value2']);
-        self::assertEquals(false, $json['data']['value3']);
+        self::assertFalse($json['data']['value3']);
     }
 
     public function testClear()

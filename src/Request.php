@@ -24,24 +24,6 @@ class Request
     protected static $body;
 
     /**
-     * @var array 资源类型定义
-     */
-    protected static $mimeType = [
-        'xml'   => 'application/xml,text/xml,application/x-xml',
-        'json'  => 'application/json,text/x-json,application/jsonrequest,text/json',
-        'js'    => 'text/javascript,application/javascript,application/x-javascript',
-        'css'   => 'text/css',
-        'rss'   => 'application/rss+xml',
-        'yaml'  => 'application/x-yaml,text/yaml',
-        'atom'  => 'application/atom+xml',
-        'pdf'   => 'application/pdf',
-        'text'  => 'text/plain',
-        'image' => 'image/png,image/jpg,image/jpeg,image/pjpeg,image/gif,image/webp,image/*',
-        'csv'   => 'text/csv',
-        'html'  => 'text/html,application/xhtml+xml,*/*',
-    ];
-
-    /**
      * @var string php://input 内容
      */
     protected static $input;
@@ -49,7 +31,13 @@ class Request
     /**
      * @var array 配置
      */
-    protected static $config;
+    protected static $config = [
+        'var_method'       => '_method',  // 请求方式伪装字段
+        'var_ajax'         => '_ajax',    // AJAX伪装字段
+        'var_pjax'         => '_pjax',    // PJAX伪装字段
+        'https_agent_name' => '',         // HTTPS代理标识
+        'accept_type'      => '',         // 指定接受类型
+    ];
 
     /**
      * 初始化静态属性
@@ -57,15 +45,9 @@ class Request
      */
     public function __construct(array $config = [])
     {
-        $default_config = [
-            'var_method'       => '_method',  // 请求方式伪装字段
-            'var_ajax'         => '_ajax',  // AJAX伪装字段
-            'var_pjax'         => '_pjax',  // PJAX伪装字段
-            'https_agent_name' => '',  // HTTPS代理标识
-            'accept_type'      => '',  // 指定接受类型
-        ];
-        $config = array_merge($default_config, $config);
-        self::$config = $config;
+        if ($config) {
+            self::$config = array_merge(self::$config, $config);
+        }
     }
 
     /**
@@ -269,6 +251,59 @@ class Request
     }
 
     /**
+     * 返回当前请求域名
+     * @param bool $protocol 是否携带协议
+     * @return string
+     */
+    public static function domain(bool $protocol = true): string
+    {
+        $domain = $_SERVER['HTTP_HOST'];
+        if ($protocol) {
+            $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $domain = $protocol . $domain;
+        }
+        return $domain;
+    }
+
+    /**
+     * 返回当前请求 URL
+     * @param bool $host     是否携带主机名
+     * @param bool $protocol 是否携带协议
+     * @return string
+     */
+    public static function url(bool $host = true, bool $protocol = true): string
+    {
+        $url = $_SERVER['REQUEST_URI'];
+        if ($host) {
+            $url = self::domain($protocol) . $url;
+        }
+        return $url;
+    }
+
+    /**
+     * 客户端IP
+     * @return string 无法识别返回“unknown”
+     */
+    public static function ip(): string
+    {
+        $sources = [
+            'HTTP_CF_CONNECTING_IP', // Cloudflare
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_CLIENT_IP',
+            'REMOTE_ADDR'
+        ];
+        foreach ($sources as $source) {
+            if (!empty($_SERVER[$source])) {
+                $ip = trim(explode(',', $_SERVER[$source])[0]);
+                if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                    return $ip;
+                }
+            }
+        }
+        return 'unknown';
+    }
+
+    /**
      * 是否为 GET 请求
      * @return bool
      */
@@ -381,13 +416,15 @@ class Request
 
     /**
      * 当前是否 Ajax 请求
+     * @param string|null $var_ajax AJAX伪装字段
      * @return bool
      */
-    public static function isAjax(): bool
+    public static function isAjax(string $var_ajax = null): bool
     {
         $value = self::server('HTTP_X_REQUESTED_WITH');
         $result = $value && 'xmlhttprequest' == strtolower($value);
-        return self::request(self::$config['var_ajax']) ? true : $result;
+        $var_ajax = $var_ajax ?: self::$config['var_ajax'];
+        return self::request($var_ajax) ? true : $result;
     }
 
     /**
@@ -420,35 +457,5 @@ class Request
         }
 
         return false;
-    }
-
-    /**
-     * 返回当前请求域名
-     * @param bool $protocol 是否携带协议
-     * @return string
-     */
-    public static function domain(bool $protocol = true): string
-    {
-        $domain = $_SERVER['HTTP_HOST'];
-        if ($protocol) {
-            $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-            $domain = $protocol . $domain;
-        }
-        return $domain;
-    }
-
-    /**
-     * 返回当前请求 URL
-     * @param bool $host     是否携带主机名
-     * @param bool $protocol 是否携带协议
-     * @return string
-     */
-    public static function url(bool $host = true, bool $protocol = true): string
-    {
-        $url = $_SERVER['REQUEST_URI'];
-        if ($host) {
-            $url = self::domain($protocol) . $url;
-        }
-        return $url;
     }
 }

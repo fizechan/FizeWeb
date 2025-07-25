@@ -1,7 +1,6 @@
 <?php
 require_once "../vendor/autoload.php";
 
-use Fize\Crypt\Json;
 use Fize\Web\Cookie;
 
 $config = [
@@ -14,10 +13,6 @@ $config = [
 new Cookie($config);
 
 $status = [];
-
-Cookie::onTamper(function ($key, $value) use (&$status) {
-    $status[$key] = $value;
-});
 
 Cookie::set('key1', 'value1');
 $value1 = Cookie::get('key1');
@@ -37,4 +32,4 @@ $result = [
     ]
 ];
 
-echo Json::encode($result);
+print_r($result);

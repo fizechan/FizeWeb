@@ -27,10 +27,20 @@ class Response extends HttpResponse
     /**
      * 强制浏览器不进行缓存
      */
-    public static function noCache()
+    public function noCache(): Response
     {
-        header("Cache-Control: no-cache");
-        header("Pragma: no-cache");
+        return $this->withHeader('Cache-Control', 'no-cache')->withHeader('Pragma', 'no-cache');
+    }
+
+    /**
+     * 页面输出类型
+     * @param string $content_type 输出类型
+     * @param string $charset      输出编码
+     * @return Response
+     */
+    protected function contentType(string $content_type, string $charset = 'utf-8'): Response
+    {
+        return $this->withHeader('Content-Type', $content_type . '; charset=' . $charset);
     }
 
     /**
@@ -119,16 +129,5 @@ class Response extends HttpResponse
             ->withHeader('Content-Transfer-Encoding', 'binary')
             ->withBody((new StreamFactory())->createStreamFromFile($file));
         return $response;
-    }
-
-    /**
-     * 页面输出类型
-     * @param string $content_type 输出类型
-     * @param string $charset      输出编码
-     * @return Response
-     */
-    protected function contentType(string $content_type, string $charset = 'utf-8'): Response
-    {
-        return $this->withHeader('Content-Type', $content_type . '; charset=' . $charset);
     }
 }
