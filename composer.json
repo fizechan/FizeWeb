@@ -8,6 +8,7 @@
       "email": "chenfengzhan@qq.com"
     }
   ],
+  "version": "3.2.0",
   "autoload": {
     "psr-4": {
       "Fize\\Web\\": "src"
@@ -16,7 +17,7 @@
   "require": {
     "php": ">=7.0.0",
     "fize/codec": "^5.0.0",
-    "fize/http": "^4.0.1",
+    "fize/http": "^5.1.2",
     "fize/session": "^5.0.0"
   },
   "suggest": {

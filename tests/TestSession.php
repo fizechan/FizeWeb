@@ -10,6 +10,6 @@ class TestSession extends TestCase
 
     public function test__construct()
     {
-
+        new Session();
     }
 }
