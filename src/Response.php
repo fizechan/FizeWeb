@@ -3,6 +3,7 @@
 namespace Fize\Web;
 
 use Fize\Codec\Json;
+use Fize\IO\File;
 use Fize\Http\Response as HttpResponse;
 use Fize\Http\StreamFactory;
 
@@ -129,5 +130,29 @@ class Response extends HttpResponse
             ->withHeader('Content-Transfer-Encoding', 'binary')
             ->withBody((new StreamFactory())->createStreamFromFile($file));
         return $response;
+    }
+
+    /**
+     * 文件
+     * @param string $file 要显示的文件路径
+     * @return Response
+     */
+    public static function file(string $file): Response
+    {
+        $response = new Response();
+        $response = $response
+            ->withHeader('Content-Type', (new File($file))->getMime())
+            ->withBody((new StreamFactory())->createStreamFromFile($file));
+        return $response;
+    }
+
+    /**
+     * 图片
+     * @param string $file 要显示的图片文件路径
+     * @return Response
+     */
+    public static function image(string $file): Response
+    {
+        return self::file($file);
     }
 }
