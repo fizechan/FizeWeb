@@ -56,7 +56,7 @@ class Request
      * @param string|null $default 默认值
      * @return mixed
      */
-    public static function server(string $key = null, string $default = null)
+    public static function server(?string $key = null, ?string $default = null)
     {
         if (is_null($key)) {
             return $_SERVER;
@@ -70,7 +70,7 @@ class Request
      * @param string|null $default 默认值
      * @return mixed
      */
-    public static function get(string $key = null, string $default = null)
+    public static function get(?string $key = null, ?string $default = null)
     {
         if (is_null($key)) {
             return $_GET;
@@ -84,7 +84,7 @@ class Request
      * @param string|null $default 默认值
      * @return mixed
      */
-    public static function post(string $key = null, string $default = null)
+    public static function post(?string $key = null, ?string $default = null)
     {
         if (is_null($key)) {
             return $_POST;
@@ -97,7 +97,7 @@ class Request
      * @param string|null $key 键名
      * @return mixed
      */
-    public static function files(string $key = null)
+    public static function files(?string $key = null)
     {
         if (is_null($key)) {
             return $_FILES;
@@ -110,7 +110,7 @@ class Request
      * @param string|null $key 键名
      * @return mixed
      */
-    public static function request(string $key = null)
+    public static function request(?string $key = null)
     {
         if (is_null($key)) {
             return $_REQUEST;
@@ -124,7 +124,7 @@ class Request
      * @param string|null $default 默认值
      * @return mixed
      */
-    public static function session(string $key = null, string $default = null)
+    public static function session(?string $key = null, ?string $default = null)
     {
         if (is_null($key)) {
             return $_SESSION;
@@ -138,7 +138,7 @@ class Request
      * @param string|null $default 默认值
      * @return mixed
      */
-    public static function env(string $key = null, string $default = null)
+    public static function env(?string $key = null, ?string $default = null)
     {
         if (is_null($key)) {
             return $_ENV;
@@ -152,7 +152,7 @@ class Request
      * @param string|null $default 默认值
      * @return mixed
      */
-    public static function cookie(string $key = null, string $default = null)
+    public static function cookie(?string $key = null, ?string $default = null)
     {
         if (is_null($key)) {
             return $_COOKIE;
@@ -178,7 +178,7 @@ class Request
      * @param mixed       $default 默认值
      * @return mixed
      */
-    public static function header(string $key = null, $default = null)
+    public static function header(?string $key = null, $default = null)
     {
         if (!self::$header) {
             if (function_exists('apache_request_headers') && $result = apache_request_headers()) {
@@ -419,7 +419,7 @@ class Request
      * @param string|null $var_ajax AJAX伪装字段
      * @return bool
      */
-    public static function isAjax(string $var_ajax = null): bool
+    public static function isAjax(?string $var_ajax = null): bool
     {
         $value = self::server('HTTP_X_REQUESTED_WITH');
         $result = $value && 'xmlhttprequest' == strtolower($value);

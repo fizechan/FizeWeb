@@ -98,7 +98,7 @@ class Response extends HttpResponse
      * @param int|null $delay 延迟时间，以秒为单位
      * @return Response
      */
-    public static function redirect(string $url, int $delay = null): Response
+    public static function redirect(string $url, ?int $delay = null): Response
     {
         $response = new Response();
         $response = $response
@@ -117,7 +117,7 @@ class Response extends HttpResponse
      * @param string|null $filename 下载文件名
      * @return Response
      */
-    public static function download(string $file, string $filename = null): Response
+    public static function download(string $file, ?string $filename = null): Response
     {
         if (is_null($filename)) {
             $filename = basename($file);
